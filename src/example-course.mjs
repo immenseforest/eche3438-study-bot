@@ -7,3 +7,5 @@ export const prep=(e,hours)=>`${hours||'Next'} preparation: ${e.topic} — ${e.d
 export const disclosure='This tool supports planning and learning. Verify its content and follow the course policy on assessed work.';
 export const ethicsQuestions=['What help is permitted for preparation and assessed work?'];
 export const plan=()=>caveats.join('\n');
+
+export const supportedGroups=['A','B','C','D'];

@@ -21,3 +21,9 @@ Copy the example modules into the ignored `private/` directory and replace demo 
 ## Checks before enabling reminders
 
 Transcribe dates against the correct group row; distinguish tutorial dates from lab rotation. Use stable event IDs and verify 24h/12h offsets across DST. Separate provisional topics from confirmed ones. Readings need provenance and should not claim full-paper review when only metadata was read. Do not place private materials in the public repository.
+
+## Group-aware pack interface
+
+Export `supportedGroups` (for example `['A','B','C','D']`). Implement `events(overrides, group)`, `deadlines(group)`, and `plan(overrides, group)` with a default group of C for legacy installations. Optionally export `groupCaveats(group)`. Legacy packs without `supportedGroups` expose C only.
+
+Each lab event should include its group and an ID unique across groups; deadlines also require group-specific IDs. Keep unchanged tutorial IDs stable across groups, and do not infer tutorial assignments from the lab rotation. Preserve existing Group C IDs when upgrading a live pack so sent reminders are not repeated. Provide the appropriate topic codes, rooms, readings and source references for every group. The engine supplies the selected group to these functions; course packs remain responsible for validated schedule data.

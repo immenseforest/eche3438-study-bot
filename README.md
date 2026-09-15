@@ -30,8 +30,9 @@ Open http://127.0.0.1:3438. Then use `/eche setup` in your server. Choose a chan
 
 | Command | Purpose |
 | --- | --- |
-| `/eche setup` | Select the server's reminder channel; Manage Server required |
-| `/eche learn` | Six-step learning wizard with Back/Next and a prediction reveal |
+| `/eche setup` | Select a reminder channel and optional lab group; Manage Server required |
+| `/eche group group:A` | Change the current reminder channel to Group A (A/B/C/D); Manage Server required |
+| `/eche learn` | Defaults to the next lab topic; optional topic choice, Back/Next and a prediction reveal |
 | `/eche guide` | Download chapter summaries and reading suggestions |
 | `/eche plan`, `/eche next` | Full preparation plan or upcoming sessions |
 | `/eche prompt` | Reusable prompt for deeper study with an assistant |
@@ -50,7 +51,7 @@ Create `private/course.mjs` and `private/study.mjs` using the interfaces in [doc
 - Checks every 30 seconds. Configure timezone-aware UTC start timestamps in your pack. The supplied live course uses America/Toronto.
 - After downtime, delivers the most recent applicable preparation window, not both missed reminders. Past events are skipped.
 - Receipts survive restarts. Ambiguous sends are held for manual reconciliation to reduce duplicates.
-- Each server has independent channel, pause, topic overrides and receipt state. Changing its channel starts new delivery history for that destination.
+- Each reminder channel has its own lab group, pause, topic overrides and delivery history. A server can configure several channels. Existing channels default to Group C; changing groups preserves history. Lab/deadline IDs must distinguish groups in your course pack.
 - Keep the host awake and online. Run only one process against a state directory. The dashboard port prevents a second instance on the same port, but this is not a distributed service.
 - Crossref results are metadata, not verified summaries or promises of free full-text access.
 - No deadlines or results should be invented. Review D2L/instructor updates yourself; this bot does not monitor D2L.
@@ -62,3 +63,9 @@ Create `private/course.mjs` and `private/study.mjs` using the interfaces in [doc
 `npm test` exercises reminder windows, legacy-state migration and concurrent server isolation. Core files: `src/server.mjs` (Discord + local HTTP), `src/guild-state.mjs` (scoped state), `src/reminders.mjs` (scheduling), `src/research.mjs` (article discovery), and course-pack loaders. No build step.
 
 MIT license applies to the code and demonstration content in this repository. External linked publications and locally added course packs retain their own rights. AI-assisted development and explanations should be reviewed by people who understand the course.
+
+## Lab groups per channel
+
+Use `/eche setup channel:#group-a group:A` and `/eche setup channel:#group-b group:B` to configure independent channels in one server. In an existing reminder channel, run `/eche group group:D` to switch its schedule. These changes require Manage Server permission. Use `/eche pause` in a channel to stop its reminders.
+
+`/eche next`, `/eche learn` without a topic, `/eche read`, plans and deadlines follow the selected group. Explicit tutorial assignments remain independent of lab rotation. The local dashboard/calendar show the primary configured channel. The demo pack has no real scheduled events; supply an authorized private pack for reminders.
