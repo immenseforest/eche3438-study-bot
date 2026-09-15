@@ -13,3 +13,9 @@ test('missed 24-hour reminder catches up once with latest applicable window',()=
  const now=Date.parse('2026-09-15T12:00Z'),e={id:'event',start:new Date(now+10*3600000).toISOString()};
  assert.equal(dueReminders([e],{},now)[0].hours,12);assert.equal(dueReminders([e],{'event:12':{status:'uncertain'}},now).length,0);
 });
+
+test('dashboard follows primary guild configured after startup',()=>{
+ let primary=null;const s=guildState({version:2,guilds:{}},()=>primary);
+ s.data.guilds.one={channelId:'channel1',receipts:{reminder:{status:'sent'}},overrides:{},paused:false};primary='one';
+ assert.equal(s.local().id,'one');assert.equal(s.state.receipts.reminder.status,'sent');s.state.paused=true;assert.equal(s.data.guilds.one.paused,true);
+});

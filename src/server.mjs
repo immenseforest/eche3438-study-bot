@@ -20,7 +20,7 @@ if(fs.existsSync('.env'))process.loadEnvFile('.env');
 const token=process.env.ECHE_DISCORD_BOT_TOKEN;
 const stateFile='data/state.json';
 let persisted=fs.existsSync(stateFile)?JSON.parse(fs.readFileSync(stateFile)):{receipts:{},overrides:{},paused:false};
-const runtime=guildState(persisted,cfg.guildId,cfg.channelId);persisted=runtime.data;
+const runtime=guildState(persisted,()=>cfg.guildId,cfg.channelId);persisted=runtime.data;
 const {context,local,state}=runtime;
 const save=()=>{fs.writeFileSync(stateFile+'.tmp',JSON.stringify(persisted,null,2));fs.renameSync(stateFile+'.tmp',stateFile);};
 save();
