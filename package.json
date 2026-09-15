@@ -1,0 +1,18 @@
+{
+  "name": "eche3438-study-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Discord course preparation, guided study and persistent 24h/12h reminders",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "discord.js": "14.27.0"
+  }
+}

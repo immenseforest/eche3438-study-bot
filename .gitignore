@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.*
+!.env.example
+config.json
+data/
+private/
+*.log
+course_text/
+eche_3438_bot/
+*.pdf
+*.docx
+*.docm
+*.xlsx
+.npm-cache/
